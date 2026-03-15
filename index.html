@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Certified Architect — Study Guide</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Study Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -478,10 +479,11 @@ section { padding: 16px 0; }
 
 <script>
 // ===== PASSWORD GATE =====
-function checkPw(e) {
+async function checkPw(e) {
   e.preventDefault();
   const input = document.getElementById('pw-input').value;
-  if (input === 'may') {
+  const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input)))).map(b => b.toString(16).padStart(2, '0')).join('');
+  if (hash === 'ee4d988c65de860fabbfbcd27f73d50bbebe3fba37fe419284f4811389c30bdc') {
     sessionStorage.setItem('cca_auth', 'true');
     unlockSite();
   } else {

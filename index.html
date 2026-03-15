@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Certified Architect — Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F7F3ED;
+  --cream-dark: #EDE7DD;
+  --ink: #1A1612;
+  --ink-light: #3D362E;
+  --ink-faded: #6B6158;
+  --vermillion: #C4432A;
+  --vermillion-light: rgba(196,67,42,0.1);
+  --vermillion-glow: rgba(196,67,42,0.15);
+  --green: #2A8C5A;
+  --green-light: rgba(42,140,90,0.1);
+  --border: #E5DED5;
+  --card-bg: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(26,22,18,0.06);
+  --shadow-md: 0 4px 16px rgba(26,22,18,0.08);
+  --shadow-hover: 0 8px 28px rgba(26,22,18,0.12);
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --d1: #C4432A;
+  --d2: #2A7BC4;
+  --d3: #2A8C5A;
+  --d4: #C4962A;
+  --d5: #7B2AC4;
+  --d1-bg: rgba(196,67,42,0.1);
+  --d2-bg: rgba(42,123,196,0.1);
+  --d3-bg: rgba(42,140,90,0.1);
+  --d4-bg: rgba(196,150,42,0.1);
+  --d5-bg: rgba(123,42,196,0.1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.6rem, 4vw, 2.5rem); margin-bottom: 1.5rem; }
+h3 { font-size: 1.3rem; }
+p { color: var(--ink-light); }
+a { color: var(--vermillion); text-decoration: none; transition: opacity 0.2s; }
+a:hover { opacity: 0.8; }
+a[target="_blank"]::after { content: " \2197"; font-size: 0.8em; }
+a.start-quiz-btn::after, a.exam-cta-btn::after { content: none; }
+code { background: var(--cream-dark); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; font-family: 'DM Mono', monospace; }
+
+/* Nav */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,243,237,0.85);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+.nav.scrolled { box-shadow: var(--shadow-md); }
+.nav-inner {
+  max-width: 1060px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif; font-weight: 700;
+  font-size: 1.1rem; letter-spacing: 0.02em; white-space: nowrap;
+}
+.nav-links { display: flex; gap: 4px; }
+.nav-link {
+  padding: 6px 14px; border-radius: var(--radius-pill);
+  font-size: 0.85rem; font-weight: 500; color: var(--ink-faded);
+  transition: all 0.2s; text-decoration: none;
+}
+.nav-link::after { content: none !important; }
+.nav-link:hover { color: var(--ink); background: var(--cream-dark); }
+.nav-link.active { color: var(--vermillion); background: var(--vermillion-light); }
+
+/* Main */
+main { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+section { padding: 16px 0; }
+.section-header { margin-bottom: 1rem; }
+.section-subtitle { color: var(--ink-faded); font-size: 0.95rem; margin-top: 0.25rem; }
+
+/* Cards */
+.card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.card-flat { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+
+/* Domain Tags */
+.domain-tag {
+  display: inline-block; padding: 3px 10px; border-radius: var(--radius-pill);
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em;
+}
+.domain-tag.d1 { background: var(--d1-bg); color: var(--d1); }
+.domain-tag.d2 { background: var(--d2-bg); color: var(--d2); }
+.domain-tag.d3 { background: var(--d3-bg); color: var(--d3); }
+.domain-tag.d4 { background: var(--d4-bg); color: var(--d4); }
+.domain-tag.d5 { background: var(--d5-bg); color: var(--d5); }
+
+/* Badges */
+.time-badge {
+  display: inline-block; padding: 4px 12px; border-radius: var(--radius-pill);
+  background: var(--cream-dark); color: var(--ink-faded);
+  font-size: 0.8rem; font-weight: 500;
+}
+
+/* Dashboard */
+.dash-hero { display: flex; align-items: center; }
+.dash-hero-ring { flex: 0 0 25%; display: flex; justify-content: center; }
+.dash-hero-stats-col { flex: 0 0 25%; display: flex; flex-direction: column; gap: 10px; padding: 0 12px; }
+.dash-hero-stat { display: flex; flex-direction: column; }
+.dash-hero-val { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; color: var(--vermillion); }
+.dash-hero-label { font-size: 0.75rem; color: var(--ink-faded); }
+.dash-hero-right { flex: 0 0 50%; min-width: 0; }
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+.dash-full { grid-column: 1 / -1; }
+.stat-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.stat-item { flex: 1; min-width: 140px; text-align: center; padding: 20px; }
+.stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--vermillion); }
+.stat-label { font-size: 0.8rem; color: var(--ink-faded); margin-top: 4px; }
+
+.progress-ring-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; }
+.progress-ring-container { position: relative; width: 160px; height: 160px; }
+.progress-ring-container svg { transform: rotate(-90deg); }
+.progress-ring-bg { fill: none; stroke: var(--border); stroke-width: 10; }
+.progress-ring-fill { fill: none; stroke: var(--vermillion); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+.progress-ring-text {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.progress-pct { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 700; color: var(--ink); }
+.progress-label { font-size: 0.75rem; color: var(--ink-faded); }
+
+.domain-bars { display: flex; flex-direction: column; gap: 12px; }
+.domain-bar-row { display: flex; align-items: center; gap: 12px; }
+.domain-bar-label { width: 200px; font-size: 0.82rem; font-weight: 500; flex-shrink: 0; }
+.domain-bar-track { flex: 1; height: 8px; background: var(--cream-dark); border-radius: 4px; overflow: hidden; }
+.domain-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+.domain-bar-pct { width: 36px; font-size: 0.8rem; color: var(--ink-faded); text-align: right; }
+
+.quiz-score-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 12px; }
+.quiz-score-item { text-align: center; padding: 10px 4px; border-radius: var(--radius); background: var(--cream); }
+.quiz-score-domain { font-size: 0.7rem; font-weight: 600; margin-bottom: 4px; }
+.quiz-score-val { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; }
+.quiz-score-na { color: var(--ink-faded); font-size: 0.75rem; }
+
+.start-quiz-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; border-radius: var(--radius-pill);
+  background: var(--vermillion); color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.3s;
+}
+.start-quiz-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,67,42,0.3); }
+.start-quiz-btn:disabled { background: var(--border); color: var(--ink-faded); cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Study Plan */
+.study-cards { display: flex; flex-direction: column; gap: 20px; }
+.study-card { position: relative; }
+.study-card.completed { border-left: 3px solid var(--green); }
+.study-card.completed .study-card-title { text-decoration: line-through; color: var(--ink-faded); }
+.study-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.study-card-left { display: flex; align-items: center; gap: 12px; }
+.study-checkbox {
+  width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border);
+  cursor: pointer; appearance: none; -webkit-appearance: none;
+  transition: all 0.2s; flex-shrink: 0; position: relative; margin-top: 2px;
+}
+.study-checkbox:checked { background: var(--green); border-color: var(--green); }
+.study-checkbox:checked::after {
+  content: '\2713'; position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  color: white; font-size: 14px; font-weight: 700;
+}
+.study-card-title { font-size: 1.2rem; }
+.study-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.study-tasks { font-size: 0.8rem; color: var(--ink-faded); margin-bottom: 12px; }
+
+.study-details { margin-top: 12px; }
+.study-details summary {
+  font-weight: 600; font-size: 0.85rem; color: var(--vermillion);
+  cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px;
+}
+.study-details summary::before { content: '\25B6'; font-size: 0.65rem; transition: transform 0.2s; }
+.study-details[open] summary::before { transform: rotate(90deg); }
+.study-details ul { margin-top: 10px; padding-left: 20px; }
+.study-details li { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 6px; line-height: 1.5; cursor: pointer; padding: 4px 6px; border-radius: 4px; transition: all 0.2s; display: flex; align-items: flex-start; gap: 8px; list-style: none; }
+.study-details li::before { content: '○'; flex-shrink: 0; font-size: 0.75rem; margin-top: 2px; color: var(--border); transition: all 0.2s; }
+.study-details li.learned { color: var(--ink-faded); text-decoration: line-through; text-decoration-color: var(--border); }
+.study-details li.learned::before { content: '●'; color: var(--green); }
+.study-details li:hover { background: var(--cream); }
+.study-details ul { padding-left: 0; }
+.study-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.study-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 14px; border-radius: var(--radius-pill);
+  background: var(--vermillion-light); color: var(--vermillion);
+  font-size: 0.8rem; font-weight: 500; transition: background 0.2s;
+}
+.study-link:hover { background: var(--vermillion-glow); opacity: 1; }
+.study-link.in-progress { background: var(--d4-bg); color: var(--d4); }
+.study-link.in-progress:hover { background: rgba(196,150,42,0.18); opacity: 1; }
+.study-link.done { background: var(--green-light); color: var(--green); }
+.study-link.done:hover { background: rgba(42,140,90,0.15); opacity: 1; }
+.study-link-wrap { display: inline-flex; align-items: center; gap: 0; }
+.link-status-dot {
+  cursor: pointer; font-size: 0.9rem; padding: 5px 6px 5px 10px;
+  border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+  background: var(--cream-dark); transition: all 0.2s; line-height: 1;
+  border: 1px solid var(--border); border-right: none;
+}
+.link-status-dot:hover { background: var(--cream); }
+.study-link-wrap .study-link { border-radius: 0 var(--radius-pill) var(--radius-pill) 0; }
+
+/* Practice Questions */
+.filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+.filter-tab {
+  padding: 6px 16px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
+  color: var(--ink-faded); cursor: pointer; transition: all 0.2s;
+}
+.filter-tab:hover { border-color: var(--ink-faded); color: var(--ink); }
+.filter-tab.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+.reset-btn {
+  padding: 6px 16px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
+  color: var(--ink-faded); cursor: pointer; transition: all 0.2s;
+  white-space: nowrap; align-self: center;
+}
+.reset-btn:hover { border-color: var(--vermillion); color: var(--vermillion); }
+
+.questions-list { display: flex; flex-direction: column; gap: 24px; }
+.question-card { transition: none; }
+.question-card:hover { transform: none; }
+.question-header { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.scenario-tag {
+  display: inline-block; padding: 3px 10px; border-radius: var(--radius-pill);
+  background: var(--cream-dark); color: var(--ink-faded);
+  font-size: 0.75rem; font-weight: 500;
+}
+.question-num { font-size: 0.75rem; font-weight: 600; color: var(--ink-faded); margin-left: auto; }
+.question-text { font-size: 0.95rem; color: var(--ink); line-height: 1.65; margin-bottom: 16px; }
+
+.options-list { display: flex; flex-direction: column; gap: 8px; }
+.option-btn {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--card-bg);
+  cursor: pointer; text-align: left; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; line-height: 1.5; color: var(--ink-light);
+}
+.option-btn:hover:not(.disabled) { border-color: var(--vermillion); background: var(--vermillion-light); }
+.option-letter {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--cream-dark); display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 0.82rem; color: var(--ink-faded);
+}
+.option-btn.correct { border-color: var(--green); background: var(--green-light); }
+.option-btn.correct .option-letter { background: var(--green); color: white; }
+.option-btn.incorrect { border-color: #C44; background: rgba(204,68,68,0.08); }
+.option-btn.incorrect .option-letter { background: #C44; color: white; }
+.option-btn.disabled { cursor: default; opacity: 0.7; }
+.option-btn.disabled:hover { border-color: var(--border); background: var(--card-bg); }
+.option-btn.correct.disabled { opacity: 1; }
+
+.explanation {
+  margin-top: 16px; padding: 16px; border-radius: var(--radius);
+  background: var(--cream); border-left: 3px solid var(--green);
+  font-size: 0.88rem; line-height: 1.6; color: var(--ink-light);
+  display: none;
+}
+.explanation.visible { display: block; animation: fadeIn 0.3s ease; }
+.explanation-label { font-weight: 600; color: var(--green); margin-bottom: 6px; }
+
+/* Quiz Modal */
+.quiz-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--cream); overflow-y: auto;
+  display: none; animation: fadeIn 0.3s ease;
+}
+.quiz-modal.active { display: block; }
+.quiz-inner { max-width: 720px; margin: 0 auto; padding: 32px 24px; min-height: 100vh; display: flex; flex-direction: column; }
+.quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.quiz-progress-text { font-size: 0.85rem; color: var(--ink-faded); }
+.quiz-score-text { font-size: 0.85rem; font-weight: 600; color: var(--vermillion); }
+.quiz-close {
+  padding: 6px 16px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: transparent;
+  font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+  color: var(--ink-faded); cursor: pointer; transition: all 0.2s;
+}
+.quiz-close:hover { background: var(--cream-dark); }
+.quiz-progress-bar { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 32px; }
+.quiz-progress-fill { height: 100%; background: var(--vermillion); border-radius: 2px; transition: width 0.4s ease; }
+.quiz-next-btn {
+  margin-top: 20px; padding: 10px 24px; border-radius: var(--radius-pill);
+  background: var(--ink); color: var(--cream);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+  border: none; cursor: pointer; transition: all 0.2s; display: none;
+}
+.quiz-next-btn.visible { display: inline-block; }
+.quiz-next-btn:hover { opacity: 0.85; }
+
+.quiz-results { text-align: center; padding: 40px 0; }
+.quiz-results h2 { margin-bottom: 8px; }
+.quiz-results-score { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 700; color: var(--vermillion); }
+.quiz-results-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin: 24px 0; }
+.quiz-results-item { padding: 16px; background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border); }
+
+/* Cheat Sheet */
+.cheat-search {
+  width: 100%; padding: 12px 20px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--card-bg);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 24px;
+}
+.cheat-search:focus { outline: none; border-color: var(--vermillion); box-shadow: 0 0 0 3px var(--vermillion-light); }
+.cheat-domains { display: flex; flex-direction: column; gap: 16px; }
+.cheat-domain { border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--card-bg); overflow: hidden; }
+.cheat-domain > summary {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; cursor: pointer; list-style: none; font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 600; transition: background 0.2s;
+}
+.cheat-domain > summary:hover { background: var(--cream); }
+.cheat-domain > summary::marker, .cheat-domain > summary::-webkit-details-marker { display: none; }
+.cheat-domain > summary .arrow { transition: transform 0.2s; font-size: 0.8rem; color: var(--ink-faded); }
+.cheat-domain[open] > summary .arrow { transform: rotate(90deg); }
+.weight-badge {
+  padding: 3px 10px; border-radius: var(--radius-pill);
+  font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 600;
+}
+.cheat-content { padding: 0 24px 24px; }
+.cheat-subsection { margin-bottom: 20px; }
+.cheat-subsection h4 { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+.cheat-subsection ul { padding-left: 18px; }
+.cheat-subsection li { font-size: 0.85rem; color: var(--ink-light); margin-bottom: 5px; line-height: 1.55; }
+.cheat-subsection li.highlight {
+  border-left: 3px solid var(--vermillion); padding-left: 10px;
+  margin-left: -18px; list-style: none; background: var(--vermillion-light);
+  padding-top: 4px; padding-bottom: 4px; border-radius: 0 4px 4px 0;
+}
+.cheat-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.85rem; }
+.cheat-table th { text-align: left; padding: 8px 12px; background: var(--cream); font-weight: 600; border-bottom: 2px solid var(--border); }
+.cheat-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--ink-light); }
+
+/* Patterns */
+.patterns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pattern-card .pattern-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700;
+  color: var(--vermillion); opacity: 0.3; line-height: 1;
+}
+.pattern-card h3 { margin: 8px 0 2px; font-size: 1.15rem; }
+.pattern-card .pattern-sub { font-size: 0.82rem; color: var(--ink-faded); font-style: italic; margin-bottom: 8px; }
+.pattern-card p:last-child { font-size: 0.88rem; }
+
+/* Scenarios */
+.scenarios-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.scenario-card .scenario-num { font-size: 0.75rem; font-weight: 600; color: var(--ink-faded); text-transform: uppercase; letter-spacing: 0.05em; }
+.scenario-card h3 { margin: 6px 0 10px; }
+.scenario-card .scenario-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.scenario-card .scenario-concepts { font-size: 0.85rem; }
+.scenario-note { text-align: center; color: var(--ink-faded); font-size: 0.85rem; margin-bottom: 20px; font-style: italic; }
+
+/* FadeUp */
+.fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links { gap: 2px; overflow-x: auto; }
+  .nav-link { padding: 6px 10px; font-size: 0.78rem; white-space: nowrap; }
+  .dash-hero { flex-direction: column; gap: 20px; }
+  .dash-hero-ring, .dash-hero-stats-col, .dash-hero-right { flex: 1 1 100%; }
+  .dash-hero-stats-col { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 16px; text-align: center; }
+  .dash-grid { grid-template-columns: 1fr; }
+  .patterns-grid, .scenarios-grid { grid-template-columns: 1fr; }
+  .stat-row { flex-direction: column; }
+  .quiz-score-grid { grid-template-columns: repeat(3, 1fr); }
+  .domain-bar-label { width: 130px; font-size: 0.75rem; }
+  section { padding: 24px 0; }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.hidden { display: none !important; }
+
+/* Password Gate */
+.pw-gate {
+  position: fixed; inset: 0; z-index: 2000;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+}
+.pw-box { text-align: center; max-width: 320px; padding: 24px; }
+.pw-input {
+  width: 100%; padding: 12px 16px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--card-bg);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  text-align: center; transition: border-color 0.2s;
+}
+.pw-input:focus { outline: none; border-color: var(--vermillion); box-shadow: 0 0 0 3px var(--vermillion-light); }
+.pw-submit {
+  margin-top: 12px; padding: 10px 32px; border-radius: var(--radius-pill);
+  background: var(--ink); color: var(--cream); border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.pw-submit:hover { opacity: 0.85; }
+.pw-error { color: var(--vermillion); font-size: 0.82rem; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div id="password-gate" class="pw-gate">
+  <div class="pw-box">
+    <h2 style="margin-bottom:4px">Study Guide</h2>
+    <p style="font-size:0.85rem;color:var(--ink-faded);margin-bottom:20px">Enter password to continue</p>
+    <form id="pw-form" onsubmit="return checkPw(event)">
+      <input type="password" id="pw-input" class="pw-input" placeholder="Password" autofocus>
+      <button type="submit" class="pw-submit">Enter</button>
+    </form>
+    <div id="pw-error" class="pw-error"></div>
+  </div>
+</div>
+
+<nav class="nav" id="nav" style="display:none">
+  <div class="nav-inner">
+    <span class="nav-logo">Study Guide</span>
+    <div class="nav-links">
+      <a href="#dashboard" class="nav-link active">Dashboard</a>
+      <a href="#study-plan" class="nav-link">Study Plan</a>
+      <a href="#practice" class="nav-link">Practice</a>
+      <a href="#cheat-sheet" class="nav-link">Cheat Sheet</a>
+      <a href="#patterns" class="nav-link">Patterns</a>
+      <a href="#scenarios" class="nav-link">Scenarios</a>
+    </div>
+  </div>
+</nav>
+
+<main style="display:none">
+  <section id="dashboard"></section>
+  <section id="study-plan"></section>
+  <section id="practice"></section>
+  <section id="cheat-sheet"></section>
+  <section id="patterns"></section>
+  <section id="scenarios"></section>
+  <section id="exam-cta" style="padding:24px 0 48px">
+    <div class="card-flat" style="text-align:center;padding:28px">
+      <h3 style="margin-bottom:4px">Ready for the Exam?</h3>
+      <p style="margin-bottom:16px;font-size:0.85rem">Once you've completed the study plan and practice exam, take the certification.</p>
+      <a href="https://anthropic.skilljar.com/claude-certified-architect-foundations-certification" target="_blank" rel="noopener" class="start-quiz-btn exam-cta-btn" style="text-decoration:none;display:inline-flex">Take the Certification Exam</a>
+    </div>
+  </section>
+</main>
+
+<div class="quiz-modal" id="quiz-modal"></div>
+
+<script>
+// ===== PASSWORD GATE =====
+function checkPw(e) {
+  e.preventDefault();
+  const input = document.getElementById('pw-input').value;
+  if (input === 'may') {
+    sessionStorage.setItem('cca_auth', 'true');
+    unlockSite();
+  } else {
+    document.getElementById('pw-error').textContent = 'Incorrect password';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+  return false;
+}
+function unlockSite() {
+  document.getElementById('password-gate').style.display = 'none';
+  document.getElementById('nav').style.display = '';
+  document.querySelector('main').style.display = '';
+}
+if (sessionStorage.getItem('cca_auth') === 'true') { document.addEventListener('DOMContentLoaded', unlockSite); }
+
+// ===== DATA =====
+
+const DOMAIN_NAMES = {
+  D1: 'Agentic Architecture & Orchestration',
+  D2: 'Tool Design & MCP Integration',
+  D3: 'Claude Code Configuration & Workflows',
+  D4: 'Prompt Engineering & Structured Output',
+  D5: 'Context Management & Reliability'
+};
+const DOMAIN_WEIGHTS = { D1: 27, D2: 18, D3: 20, D4: 20, D5: 15 };
+
+const STUDY_DAYS = [
+  {
+    id: 1, dayLabel: 'Day 1\u20132', title: 'Building with the Claude API',
+    timeEstimate: '~2 days', platform: 'anthropic.skilljar.com',
+    domains: ['D1','D4'], taskStatements: ['1.1','4.3','4.5'],
+    focusAreas: [
+      'The agentic loop lifecycle: send request \u2192 inspect stop_reason ("tool_use" = keep going, "end_turn" = done) \u2192 execute tools \u2192 append results \u2192 repeat',
+      'tool_choice options: "auto" (model may return text), "any" (must call a tool), forced {"type":"tool","name":"..."} (must call specific tool)',
+      'Tool use with JSON schemas for guaranteed schema-compliant structured output',
+      'How tool results are appended to conversation history so the model reasons about what to do next',
+      'Anti-patterns: parsing natural language to determine loop termination, arbitrary iteration caps, checking for assistant text as completion indicator'
+    ],
+    links: [{ label: 'Building with the Claude API (Skilljar)', url: 'https://anthropic.skilljar.com/claude-with-the-anthropic-api' }]
+  },
+  {
+    id: 2, dayLabel: 'Day 3', title: 'Agent SDK Docs + MCP Advanced Topics',
+    timeEstimate: '~1 day', platform: 'Documentation',
+    domains: ['D1'], taskStatements: ['1.2','1.3','1.4','1.5','1.6','1.7','4.5'],
+    focusAreas: [
+      'Hub-and-spoke: Coordinator manages ALL inter-subagent communication. Subagents never talk directly to each other.',
+      'Subagents have isolated context \u2014 they do NOT inherit parent context automatically. Context must be explicit in prompt.',
+      'Parallel subagent execution = emit multiple Task tool calls in a single coordinator response',
+      'allowedTools must include "Task" for a coordinator to spawn subagents',
+      'PostToolUse hooks for data normalization (e.g., converting timestamps)',
+      'PreToolUse / tool call interception for policy enforcement (e.g., blocking refunds > $500)',
+      'Programmatic enforcement > prompt-based for critical business logic (hooks give deterministic guarantees)',
+      'Task decomposition: fixed sequential pipelines (prompt chaining) vs dynamic adaptive decomposition',
+      'Programmatic prerequisites: blocking downstream tools until prerequisites complete',
+      'Structured handoffs: include customer ID, root cause, refund amount, recommended action',
+      'Session management: --resume with session names, fork_session for divergent branches',
+      'Message Batches API: 50% cost savings, up to 24hr processing, custom_id for correlation, no multi-turn tool calling'
+    ],
+    links: [
+      { label: 'Agent SDK Overview', url: 'https://platform.claude.com/docs/en/agent-sdk/overview' },
+      { label: 'Subagents (most important)', url: 'https://platform.claude.com/docs/en/agent-sdk/subagents' },
+      { label: 'Hooks', url: 'https://platform.claude.com/docs/en/agent-sdk/hooks' },
+      { label: 'Permissions', url: 'https://platform.claude.com/docs/en/agent-sdk/permissions' },
+      { label: 'Sessions', url: 'https://platform.claude.com/docs/en/agent-sdk/sessions' },
+      { label: 'Message Batches API', url: 'https://docs.anthropic.com/en/docs/build-with-claude/message-batches' }
+    ]
+  },
+  {
+    id: 3, dayLabel: 'Day 4\u20135', title: 'Claude Code in Action + Intro to MCP',
+    timeEstimate: '~2 days', platform: 'anthropic.skilljar.com',
+    domains: ['D3','D2'], taskStatements: ['3.1','3.2','3.3','3.4','3.5','3.6','2.1','2.2','2.3','2.4','2.5'],
+    focusAreas: [
+      'CLAUDE.md hierarchy: ~/.claude/CLAUDE.md (user, NOT shared) \u2192 .claude/CLAUDE.md or root (project, version controlled) \u2192 subdirectory (directory-level)',
+      '@import syntax for modular CLAUDE.md',
+      '.claude/rules/ with YAML frontmatter paths: glob patterns \u2014 loads only when editing matching files',
+      '.claude/commands/ (project-scoped, shared via git) vs ~/.claude/commands/ (personal)',
+      '.claude/skills/ with SKILL.md frontmatter: context: fork, allowed-tools, argument-hint',
+      'Plan mode = complex/architectural tasks. Direct execution = simple/well-scoped changes.',
+      'Explore subagent for isolating verbose discovery output from main context',
+      'CI/CD: -p / --print for non-interactive mode, --output-format json + --json-schema for structured output',
+      'Session isolation: use separate Claude instance for review (not the one that generated code)',
+      '/memory to check loaded memory files, /compact to reduce context usage',
+      'Tool descriptions = #1 mechanism for LLM tool selection. Minimal descriptions = unreliable selection.',
+      'Split generic tools into purpose-specific tools with clear input/output contracts',
+      'Structured error responses: isError flag, errorCategory (transient/validation/permission), isRetryable boolean',
+      'MCP server scoping: .mcp.json (project, shared) vs ~/.claude.json (user, personal)',
+      'Environment variable expansion in .mcp.json (e.g., ${GITHUB_TOKEN})',
+      'MCP resources for content catalogs (reduce exploratory tool calls). Built-in tools: Grep, Glob, Read, Write, Edit, Bash'
+    ],
+    links: [
+      { label: 'Claude Code in Action (Skilljar)', url: 'https://anthropic.skilljar.com/claude-code-in-action' },
+      { label: 'Intro to MCP (Skilljar)', url: 'https://anthropic.skilljar.com/introduction-to-model-context-protocol' }
+    ]
+  },
+  {
+    id: 4, dayLabel: 'Day 6', title: 'Hands-On Exercises',
+    timeEstimate: '~1 day', platform: 'exam_guide.pdf',
+    domains: ['D1','D2','D4','D5'], taskStatements: [],
+    focusAreas: [
+      'Exercise 1: Build a Multi-Tool Agent with Escalation Logic \u2014 define 3\u20134 MCP tools, implement agentic loop, add structured errors, implement hook for business rule enforcement, test multi-concern messages',
+      'Exercise 3: Build a Structured Data Extraction Pipeline \u2014 JSON schema with required/optional/nullable fields, validation-retry loop, few-shot examples for varied formats, batch processing with custom_id, human review routing with confidence scores'
+    ],
+    links: []
+  },
+  {
+    id: 5, dayLabel: 'Day 7', title: 'Practice Exam + Targeted Review',
+    timeEstimate: '~1 day', platform: 'Anthropic',
+    domains: ['D1','D2','D3','D4','D5'], taskStatements: [],
+    focusAreas: [
+      'Take the official practice exam',
+      'Review weak areas identified by the practice exam',
+      'Re-read the 12 sample questions in exam_guide.pdf \u2014 study why wrong answers are wrong',
+      'Memorize the 10 Key Exam Patterns below'
+    ],
+    links: [{ label: 'Practice Exam', url: 'https://anthropic.skilljar.com/anthropic-certification-practice-exam/425721/scorm/17p1a5iqsma8x' }]
+  }
+];
+
+const QUESTIONS = [
+  {
+    id:1, domain:'D1', domainName:'Agentic Architecture', scenario:'Customer Support Agent', title:'Agentic Loop Control Flow',
+    text:'Your customer support agent sometimes responds to customers mid-investigation \u2014 it calls get_customer, receives the result, then returns a conversational message ("I found your account, let me look into this") before calling lookup_order. This adds unnecessary back-and-forth. What should you fix?',
+    options:[
+      {letter:'A', text:'Check stop_reason in your agentic loop \u2014 continue tool execution when it\'s "tool_use" and only present the response to the customer when it\'s "end_turn".'},
+      {letter:'B', text:'Add "Do not respond to the customer until all investigation is complete" to the system prompt.'},
+      {letter:'C', text:'Set max_tokens to a low value to prevent verbose mid-investigation responses.'},
+      {letter:'D', text:'Set tool_choice: "any" to force the model to always call a tool instead of generating text.'}
+    ],
+    correct:'A',
+    explanation:'The agentic loop should check stop_reason to decide whether to continue (tool_use) or present output (end_turn). This is the fundamental control flow mechanism. B is prompt-based and unreliable. C would truncate all responses, including the final one. D forces tool use but doesn\'t solve the control flow issue.'
+  },
+  {
+    id:2, domain:'D1', domainName:'Agentic Architecture', scenario:'Multi-Agent Research System', title:'Coordinator Task Decomposition',
+    text:'Your research system is asked to analyze "the impact of remote work on employee productivity." The coordinator delegates to three subagents: "remote work and daily output metrics," "remote work and time tracking data," and "remote work and task completion rates." The final report is thorough on quantitative measures but completely ignores employee wellbeing, collaboration quality, innovation, and long-term retention. What is the root cause?',
+    options:[
+      {letter:'A', text:'The web search subagent\'s queries aren\'t broad enough to find articles about wellbeing and collaboration.'},
+      {letter:'B', text:'The synthesis subagent is filtering out qualitative findings because they lack numerical data.'},
+      {letter:'C', text:'The coordinator\'s task decomposition is too narrow, focusing only on quantitative metrics and missing entire dimensions of the topic.'},
+      {letter:'D', text:'The document analysis subagent lacks instructions for analyzing qualitative research papers.'}
+    ],
+    correct:'C',
+    explanation:'The coordinator decomposed "productivity" into only quantitative metrics, so subagents were never assigned the qualitative dimensions. The subagents executed their tasks correctly \u2014 the problem is what they were assigned.'
+  },
+  {
+    id:3, domain:'D1', domainName:'Agentic Architecture', scenario:'Customer Support Agent', title:'Hooks vs Prompt Instructions',
+    text:'Your agent occasionally processes refunds exceeding $500 despite a company policy requiring manager approval. This happens in ~3% of cases. The system prompt clearly states the policy. What\'s the most reliable fix?',
+    options:[
+      {letter:'A', text:'Add few-shot examples showing the agent refusing high-value refunds and redirecting to a manager.'},
+      {letter:'B', text:'Implement a PreToolUse hook that intercepts process_refund calls, checks the amount, and blocks execution above $500 with a redirect to the escalation workflow.'},
+      {letter:'C', text:'Add the policy to both the system prompt and the tool description for process_refund to reinforce it from multiple angles.'},
+      {letter:'D', text:'Implement extended thinking so the agent reasons more carefully about policy compliance before each action.'}
+    ],
+    correct:'B',
+    explanation:'When business rules require guaranteed compliance (financial consequences), programmatic enforcement via hooks provides deterministic guarantees. Prompt-based approaches (A, C) reduce failure rate but can never reach 0%. Extended thinking (D) doesn\'t provide deterministic enforcement.'
+  },
+  {
+    id:4, domain:'D2', domainName:'Tool Design & MCP', scenario:'Developer Productivity Tools', title:'Tool Description Quality',
+    text:'Your agent has two MCP tools: search_codebase ("Searches code") and search_documentation ("Searches docs"). Logs show the agent uses search_codebase for 90% of queries, including "how does authentication work?" What\'s the most effective first fix?',
+    options:[
+      {letter:'A', text:'Add a routing classifier that analyzes each query and selects the appropriate tool before the agent processes it.'},
+      {letter:'B', text:'Expand both tool descriptions to include example queries, supported input formats, and clear boundaries explaining when to use each tool versus the other.'},
+      {letter:'C', text:'Consolidate both into a single search tool that internally routes to the appropriate backend.'},
+      {letter:'D', text:'Add tool_choice: {"type":"tool","name":"search_documentation"} to force documentation searches for conceptual questions.'}
+    ],
+    correct:'B',
+    explanation:'Tool descriptions are the primary mechanism LLMs use for tool selection. Minimal descriptions don\'t give the model enough context to differentiate. Expanding descriptions is the lowest-effort, highest-impact first step. A is over-engineered. C loses independent search ability. D can\'t dynamically detect "conceptual questions."'
+  },
+  {
+    id:5, domain:'D2', domainName:'Tool Design & MCP', scenario:'Customer Support Agent', title:'Structured Error Responses',
+    text:'Your agent calls lookup_order and receives {"error":"Operation failed"}. It retries 3 times, then tells the customer it can\'t find their order. Investigation reveals the order exists but the account is locked due to fraud investigation. What should you change?',
+    options:[
+      {letter:'A', text:'Return {"error":"Account locked","errorCategory":"permission","isRetryable":false,"customerMessage":"Your account is under review. Please contact our fraud department."}.'},
+      {letter:'B', text:'Increase the retry limit to 5 and add exponential backoff to handle transient failures.'},
+      {letter:'C', text:'Have the agent try alternative lookup methods (by email, phone number) when the primary lookup fails.'},
+      {letter:'D', text:'Add a fallback that searches a read-only cache of order data when the primary system is unavailable.'}
+    ],
+    correct:'A',
+    explanation:'The generic error prevented the agent from understanding the actual problem. Structured error metadata (category, retryability, customer-facing message) enables correct action. B wastes retries on a non-retryable error. C and D solve the wrong problem.'
+  },
+  {
+    id:6, domain:'D2', domainName:'Tool Design & MCP', scenario:'Multi-Agent Research System', title:'Tool Scoping Per Agent',
+    text:'Your synthesis subagent has access to 12 tools including web search, database queries, and report formatting. Logs show it occasionally runs web searches mid-synthesis and queries the database instead of using findings already passed to it. What\'s the best fix?',
+    options:[
+      {letter:'A', text:'Add instructions to the synthesis agent\'s prompt: "Do not use web search or database tools."'},
+      {letter:'B', text:'Restrict the synthesis agent\'s allowedTools to only synthesis-relevant tools (e.g., format_report, verify_fact), removing search and database tools.'},
+      {letter:'C', text:'Implement a rate limiter on the web search and database tools to prevent excessive usage.'},
+      {letter:'D', text:'Add a PostToolUse hook that logs when the synthesis agent uses non-synthesis tools and alerts the team.'}
+    ],
+    correct:'B',
+    explanation:'Agents with tools outside their specialization tend to misuse them. Restrict each agent\'s tool set to only what\'s needed for its role. Prompt instructions (A) are unreliable. Rate limiting (C) doesn\'t prevent misuse. Logging (D) detects but doesn\'t fix.'
+  },
+  {
+    id:7, domain:'D3', domainName:'Claude Code Config', scenario:'Code Generation with Claude Code', title:'CLAUDE.md Hierarchy',
+    text:'A new team member reports that Claude Code isn\'t following the team\'s testing conventions. Other team members don\'t have this issue. The testing conventions are defined in ~/.claude/CLAUDE.md on each developer\'s machine. What\'s the most likely cause and fix?',
+    options:[
+      {letter:'A', text:'The new member\'s ~/.claude/CLAUDE.md file has a syntax error. Fix the syntax.'},
+      {letter:'B', text:'User-level ~/.claude/CLAUDE.md files are personal and not shared via version control. Move conventions to project-level .claude/CLAUDE.md so all members get them automatically.'},
+      {letter:'C', text:'The new member needs to run /memory to reload the CLAUDE.md configuration.'},
+      {letter:'D', text:'The CLAUDE.md file size exceeds the maximum limit. Split it into smaller files.'}
+    ],
+    correct:'B',
+    explanation:'~/.claude/CLAUDE.md is user-level configuration not shared through version control. The new member doesn\'t have it. Moving to project-level ensures all members receive conventions when they clone or pull.'
+  },
+  {
+    id:8, domain:'D3', domainName:'Claude Code Config', scenario:'Code Generation with Claude Code', title:'Path-Specific Rules',
+    text:'Your project has test files spread throughout the codebase (Button.test.tsx, api.test.ts, utils.test.py), co-located with code they test. You want all tests to follow the same conventions regardless of directory. What\'s the most maintainable approach?',
+    options:[
+      {letter:'A', text:'Create a .claude/rules/testing.md file with paths: ["**/*.test.*"] in the YAML frontmatter.'},
+      {letter:'B', text:'Place a CLAUDE.md file in every directory that contains test files.'},
+      {letter:'C', text:'Add all testing conventions to the root CLAUDE.md and rely on Claude to infer which rules apply.'},
+      {letter:'D', text:'Create a skill in .claude/skills/testing/ that developers invoke with /testing before writing tests.'}
+    ],
+    correct:'A',
+    explanation:'.claude/rules/ files with glob patterns in YAML frontmatter apply conventions based on file path regardless of directory location. B is unmaintainable. C relies on inference (unreliable). D requires manual invocation.'
+  },
+  {
+    id:9, domain:'D3', domainName:'Claude Code Config', scenario:'Code Generation with Claude Code', title:'Plan Mode vs Direct Execution',
+    text:'Which of these tasks is most appropriate for plan mode?',
+    options:[
+      {letter:'A', text:'Adding a null check to a function with a clear stack trace pointing to the exact line.'},
+      {letter:'B', text:'Migrating a monolithic Express.js application to microservices, affecting 45+ files across 8 modules.'},
+      {letter:'C', text:'Fixing a typo in a user-facing error message.'},
+      {letter:'D', text:'Adding a new required field to an existing API endpoint\'s request validation.'}
+    ],
+    correct:'B',
+    explanation:'Plan mode is for complex tasks with multiple valid approaches, architectural decisions, and multi-file changes. A microservices migration fits perfectly. A, C, D are well-scoped changes for direct execution.'
+  },
+  {
+    id:10, domain:'D4', domainName:'Prompt Engineering', scenario:'Structured Data Extraction', title:'tool_choice Configuration',
+    text:'Your extraction system processes documents of unknown type (invoices, contracts, reports). You have three extraction tools. You want to guarantee structured output but let the model choose the right extractor. What tool_choice setting should you use?',
+    options:[
+      {letter:'A', text:'tool_choice: "auto" \u2014 the model will select the right tool based on document content.'},
+      {letter:'B', text:'tool_choice: "any" \u2014 guarantees the model calls a tool (structured output) while allowing it to select which one.'},
+      {letter:'C', text:'tool_choice: {"type":"tool","name":"extract_invoice"} \u2014 force the most common type.'},
+      {letter:'D', text:'Don\'t set tool_choice and add instructions in the system prompt to always use an extraction tool.'}
+    ],
+    correct:'B',
+    explanation:'"any" guarantees the model calls a tool (ensuring structured output) while letting it choose which extraction tool matches the document. "auto" allows text instead of tool calls. Forcing a specific tool ignores document type. Prompt instructions don\'t guarantee tool usage.'
+  },
+  {
+    id:11, domain:'D4', domainName:'Prompt Engineering', scenario:'Structured Data Extraction', title:'Nullable Fields & Hallucination',
+    text:'Your extraction tool\'s JSON schema has "warranty_expiration" as a required string field. When processing documents that don\'t mention warranty information, the model fabricates plausible dates. What\'s the best fix?',
+    options:[
+      {letter:'A', text:'Add "If warranty information is not present, write \'N/A\'" to the prompt.'},
+      {letter:'B', text:'Make warranty_expiration nullable/optional in the schema so the model can return null when the information isn\'t present.'},
+      {letter:'C', text:'Add a validation step that checks extracted warranty dates against a database of known products.'},
+      {letter:'D', text:'Add few-shot examples showing the model leaving warranty fields empty when not found.'}
+    ],
+    correct:'B',
+    explanation:'Required fields pressure the model to fabricate values. Making the field nullable allows the model to return null when information doesn\'t exist in the source. A is a workaround. C validates after the fact. D doesn\'t address the schema constraint.'
+  },
+  {
+    id:12, domain:'D4', domainName:'Prompt Engineering', scenario:'Claude Code for CI/CD', title:'Multi-Pass Review',
+    text:'Your single-pass code review of a 14-file PR produces detailed feedback for some files but superficial comments for others, misses obvious bugs, and flags a pattern as problematic in one file while approving identical code elsewhere. What\'s the best restructuring?',
+    options:[
+      {letter:'A', text:'Split into per-file local analysis passes for each file individually, then run a separate cross-file integration pass examining data flow across files.'},
+      {letter:'B', text:'Require developers to split PRs into smaller submissions of 3\u20134 files.'},
+      {letter:'C', text:'Use a model with a larger context window to give all files adequate attention.'},
+      {letter:'D', text:'Run three independent reviews of the full PR and only flag issues found in at least two runs.'}
+    ],
+    correct:'A',
+    explanation:'Splitting into focused passes directly addresses attention dilution. Per-file analysis ensures consistent depth; a separate integration pass catches cross-file issues. B shifts burden to developers. C misunderstands that larger context \u2260 better attention. D suppresses detection of real bugs.'
+  },
+  {
+    id:13, domain:'D5', domainName:'Context & Reliability', scenario:'Customer Support Agent', title:'Escalation Triggers',
+    text:'A customer asks for a competitor price match. Your company\'s pricing policy covers adjustments for your own website\'s prices but is silent on competitor price matching. What should the agent do?',
+    options:[
+      {letter:'A', text:'Decline the request and explain that the company doesn\'t offer competitor price matching, since the policy doesn\'t mention it.'},
+      {letter:'B', text:'Escalate to a human agent, because the policy is ambiguous/silent on this specific type of request.'},
+      {letter:'C', text:'Offer a standard 10% discount as a goodwill gesture to retain the customer.'},
+      {letter:'D', text:'Ask the customer to provide proof of the competitor\'s price and then process a price match.'}
+    ],
+    correct:'B',
+    explanation:'When policy is ambiguous or silent on a request, the agent should escalate rather than making assumptions. A incorrectly interprets silence as denial. C and D take actions without policy authorization.'
+  },
+  {
+    id:14, domain:'D5', domainName:'Context & Reliability', scenario:'Customer Support Agent', title:'Context Window Management',
+    text:'Your agent handles three separate issues. After resolving two, it references incorrect amounts from earlier \u2014 stating the refund was $45 when it was actually $52.70. What\'s the most effective fix?',
+    options:[
+      {letter:'A', text:'Increase the model\'s max_tokens to prevent context truncation.'},
+      {letter:'B', text:'Extract transactional facts (amounts, dates, order numbers, statuses) into a persistent "case facts" block included in each prompt, separate from summarized conversation history.'},
+      {letter:'C', text:'Add "Always double-check amounts before stating them to customers" to the system prompt.'},
+      {letter:'D', text:'Limit conversations to one issue at a time to prevent context overload.'}
+    ],
+    correct:'B',
+    explanation:'Progressive summarization loses precise numerical values. Extracting transactional facts into a structured "case facts" block ensures exact amounts persist regardless of conversation length. A doesn\'t address summarization loss. C is unreliable. D reduces capability.'
+  },
+  {
+    id:15, domain:'D5', domainName:'Context & Reliability', scenario:'Multi-Agent Research System', title:'Error Propagation',
+    text:'Your web search subagent times out while researching one of three assigned topics. It completed two topics successfully. How should the subagent report this to the coordinator?',
+    options:[
+      {letter:'A', text:'Return only the two successful results, marked as a successful completion.'},
+      {letter:'B', text:'Return a generic {"status":"error","message":"Search timed out"} and discard partial results.'},
+      {letter:'C', text:'Return structured error context: {"status":"partial","completed":[...results...],"failed":{"topic":"...","error":"timeout","attempted_queries":[...],"isRetryable":true},"alternatives":["try narrower query"]}.'},
+      {letter:'D', text:'Retry the failed topic 3 times with exponential backoff before returning anything.'}
+    ],
+    correct:'C',
+    explanation:'Structured error context gives the coordinator everything needed for intelligent recovery. A silently suppresses the error. B discards valuable partial results. D delays without guaranteeing success and hides the situation from the coordinator.'
+  }
+];
+
+const EXAM_PATTERNS = [
+  {n:1, title:'Programmatic > Prompt-based', sub:'for critical business logic', desc:'When financial/security consequences exist, programmatic enforcement (hooks, prerequisite gates) beats prompt instructions every time. Prompts have non-zero failure rates.'},
+  {n:2, title:'Tool descriptions are the #1 lever', sub:'for tool selection', desc:'Minimal descriptions \u2192 unreliable selection. Always expand descriptions before adding few-shot examples or routing layers. Lowest-effort, highest-impact fix.'},
+  {n:3, title:'Scope tools narrowly per agent', sub:'4\u20135 tools maximum', desc:'Don\'t give agents tools outside their specialization. Agents with irrelevant tools tend to misuse them. Use scoped cross-role tools for high-frequency needs.'},
+  {n:4, title:'Structured errors enable recovery', sub:'not generic "Operation failed"', desc:'{errorCategory, isRetryable, description} \u2014 distinguish transient (retry), validation (fix input), permission (escalate), business (explain to user). Include partial results.'},
+  {n:5, title:'Independent review > self-review', sub:'separate Claude instance', desc:'A separate instance without prior reasoning context catches more issues than self-review or extended thinking in the same session. The generating session retains biasing context.'},
+  {n:6, title:'Few-shot examples > vague instructions', sub:'2\u20134 targeted examples', desc:'Show reasoning for ambiguous cases. They enable generalization to novel patterns, not just matching pre-specified cases. More effective than "be conservative."'},
+  {n:7, title:'Nullable schema fields prevent hallucination', sub:'optional when data may be absent', desc:'Required fields pressure the model to fabricate values. Making fields nullable lets the model return null. Tool use eliminates syntax errors but not semantic errors.'},
+  {n:8, title:'Batch API = latency-tolerant only', sub:'50% savings, up to 24hr processing', desc:'Never for blocking workflows (pre-merge checks). Good for overnight reports, weekly audits. No multi-turn tool calling. Use custom_id for correlation.'},
+  {n:9, title:'Split large reviews into focused passes', sub:'per-file + cross-file integration', desc:'Avoids attention dilution and contradictory findings. A larger context window does NOT solve attention quality issues.'},
+  {n:10, title:'Context management is active', sub:'not passive', desc:'Extract transactional facts into persistent blocks. Trim verbose tool outputs. Place key findings at beginning (mitigates "lost in the middle"). Delegate to subagents. Use /compact.'}
+];
+
+const SCENARIOS = [
+  {id:1, name:'Customer Support Agent', domains:['D1','D2','D5'], concepts:'Programmatic prerequisites, escalation criteria, tool descriptions, error handling'},
+  {id:2, name:'Code Generation with Claude Code', domains:['D3','D5'], concepts:'CLAUDE.md config, plan mode vs direct, commands/skills, context management'},
+  {id:3, name:'Multi-Agent Research System', domains:['D1','D2','D5'], concepts:'Coordinator-subagent patterns, task decomposition, error propagation, provenance'},
+  {id:4, name:'Developer Productivity Tools', domains:['D2','D3','D1'], concepts:'Built-in tools, MCP integration, tool scoping, codebase exploration'},
+  {id:5, name:'Claude Code for CI/CD', domains:['D3','D4'], concepts:'-p flag, structured output, multi-pass review, batch vs real-time'},
+  {id:6, name:'Structured Data Extraction', domains:['D4','D5'], concepts:'JSON schemas, tool_choice, validation-retry, few-shot, human review routing'}
+];
+
+const CHEAT_SHEET = [
+  {
+    id:'D1', name:'Agentic Architecture & Orchestration', weight:27,
+    sections:[
+      { title:'Agentic Loop', items:[
+        {text:'Loop continues when stop_reason = "tool_use", terminates when stop_reason = "end_turn"', hl:true},
+        {text:'Tool results must be appended to conversation history between iterations', hl:false},
+        {text:'Anti-patterns: parsing natural language for termination, arbitrary iteration caps, checking assistant text as completion indicator', hl:false}
+      ]},
+      { title:'Multi-Agent Patterns', items:[
+        {text:'Hub-and-spoke: Coordinator manages ALL routing, error handling, communication. Subagents never talk directly.', hl:true},
+        {text:'Subagents have isolated context \u2014 do NOT inherit parent context automatically', hl:true},
+        {text:'Parallel execution = emit multiple Task tool calls in a single coordinator response', hl:false},
+        {text:'allowedTools must include "Task" for coordinator to spawn subagents', hl:false}
+      ]},
+      { title:'Hooks', items:[
+        {text:'PostToolUse \u2192 normalize data (timestamps, formats) after tool execution', hl:false},
+        {text:'PreToolUse / tool call interception \u2192 enforce policy (block refunds > $500)', hl:false},
+        {text:'Hooks > Prompts for critical business logic (financial, security consequences)', hl:true}
+      ]},
+      { title:'Task Decomposition', items:[
+        {text:'Prompt chaining (fixed sequential) \u2192 predictable multi-aspect reviews', hl:false},
+        {text:'Dynamic decomposition \u2192 open-ended investigation tasks', hl:false},
+        {text:'Split large code reviews: per-file local passes + cross-file integration pass', hl:false}
+      ]},
+      { title:'Sessions', items:[
+        {text:'--resume <session-name> \u2192 continue a named session', hl:false},
+        {text:'fork_session \u2192 create independent branches from shared baseline', hl:false},
+        {text:'Resume when prior context is mostly valid; start fresh with injected summaries when tool results are stale', hl:false}
+      ]},
+      { title:'Workflow Enforcement', items:[
+        {text:'Programmatic prerequisites block downstream tools until prerequisites complete (e.g., process_refund blocked until get_customer returns verified ID)', hl:true},
+        {text:'Structured handoffs include: customer ID, root cause, refund amount, recommended action', hl:false}
+      ]}
+    ]
+  },
+  {
+    id:'D2', name:'Tool Design & MCP Integration', weight:18,
+    sections:[
+      { title:'Tool Descriptions', items:[
+        {text:'Tool descriptions = #1 mechanism for tool selection', hl:true},
+        {text:'Include: input formats, example queries, edge cases, boundaries vs similar tools', hl:false},
+        {text:'Fix descriptions BEFORE adding few-shot examples or routing layers', hl:false}
+      ]},
+      { title:'Tool Scoping', items:[
+        {text:'4\u20135 tools per agent max for reliable selection', hl:true},
+        {text:'Agents with irrelevant tools tend to misuse them', hl:false},
+        {text:'Scoped cross-role tools OK for high-frequency needs (e.g., verify_fact for synthesis agent)', hl:false}
+      ]},
+      { title:'Structured Errors', items:[
+        {text:'{errorCategory, isRetryable, description}', hl:true},
+        {text:'Categories: transient (retry), validation (fix input), permission (escalate), business (explain)', hl:false},
+        {text:'Generic "Operation failed" \u2192 agent can\'t make recovery decisions', hl:false},
+        {text:'Distinguish access failures (timeouts) from valid empty results (no matches)', hl:false}
+      ]},
+      { title:'MCP Server Config', items:[
+        {text:'.mcp.json \u2192 project-level, shared via version control', hl:true},
+        {text:'~/.claude.json \u2192 user-level, personal/experimental', hl:false},
+        {text:'Environment variable expansion: ${GITHUB_TOKEN} in .mcp.json', hl:false},
+        {text:'Tools from all configured MCP servers available simultaneously', hl:false}
+      ]},
+      { title:'tool_choice Options', table:{
+        headers:['Setting','Behavior'],
+        rows:[
+          ['"auto"','Model may return text OR call a tool'],
+          ['"any"','Model MUST call a tool (can choose which)'],
+          ['{"type":"tool","name":"..."}','Model MUST call that specific tool']
+        ]
+      }},
+      { title:'Built-in Tools', table:{
+        headers:['Tool','Purpose'],
+        rows:[
+          ['Grep','Search file contents (patterns, function names, errors)'],
+          ['Glob','Find files by name/path patterns (**/*.test.tsx)'],
+          ['Read','Load full file contents'],
+          ['Write','Create/overwrite files'],
+          ['Edit','Targeted modifications using unique text matching'],
+          ['Bash','Shell commands']
+        ]
+      }}
+    ]
+  },
+  {
+    id:'D3', name:'Claude Code Configuration & Workflows', weight:20,
+    sections:[
+      { title:'CLAUDE.md Hierarchy', table:{
+        headers:['Level','Location','Shared?'],
+        rows:[
+          ['User','~/.claude/CLAUDE.md','No \u2014 personal only'],
+          ['Project','.claude/CLAUDE.md or root CLAUDE.md','Yes \u2014 version controlled'],
+          ['Directory','Subdirectory CLAUDE.md','Yes \u2014 for that directory']
+        ]
+      }},
+      { title:'Path-Specific Rules', items:[
+        {text:'.claude/rules/ files with YAML frontmatter: paths: ["**/*.test.tsx"]', hl:true},
+        {text:'Load only when editing matching files \u2192 reduces irrelevant context', hl:false},
+        {text:'Better than directory CLAUDE.md for conventions spanning multiple directories', hl:false}
+      ]},
+      { title:'Commands & Skills', items:[
+        {text:'Project commands: .claude/commands/ (version controlled, shared)', hl:true},
+        {text:'Personal commands: ~/.claude/commands/ (not shared)', hl:false},
+        {text:'SKILL.md frontmatter: context: fork, allowed-tools, argument-hint', hl:true},
+        {text:'context: fork \u2192 isolates verbose/exploratory output from main session', hl:false},
+        {text:'Skills = on-demand invocation. CLAUDE.md = always-loaded.', hl:false}
+      ]},
+      { title:'Plan Mode vs Direct Execution', table:{
+        headers:['Plan Mode','Direct Execution'],
+        rows:[
+          ['Multi-file changes','Single-file bug fix'],
+          ['Multiple valid approaches','Clear stack trace'],
+          ['Architectural decisions','Adding a validation check'],
+          ['Large-scale restructuring','Typo fixes']
+        ]
+      }},
+      { title:'CI/CD Integration', items:[
+        {text:'-p / --print \u2192 non-interactive mode (prevents hang)', hl:true},
+        {text:'--output-format json + --json-schema \u2192 structured CI output', hl:false},
+        {text:'Session isolation: review in separate instance from generation', hl:true},
+        {text:'Include prior review findings when re-running \u2192 report only new/unaddressed issues', hl:false}
+      ]},
+      { title:'Iterative Refinement', items:[
+        {text:'Concrete input/output examples > prose descriptions', hl:true},
+        {text:'Test-driven iteration: write tests first, share failures to guide improvement', hl:false},
+        {text:'Interview pattern: have Claude ask questions before implementing', hl:false},
+        {text:'Multiple interacting issues \u2192 single message. Independent issues \u2192 sequential.', hl:false}
+      ]}
+    ]
+  },
+  {
+    id:'D4', name:'Prompt Engineering & Structured Output', weight:20,
+    sections:[
+      { title:'Prompt Precision', items:[
+        {text:'Explicit criteria > vague instructions (e.g., "flag when behavior contradicts code" > "check comments are accurate")', hl:true},
+        {text:'"Be conservative" / "only high-confidence" \u2192 does NOT improve precision', hl:false},
+        {text:'High false positive rates undermine trust in ALL categories', hl:false}
+      ]},
+      { title:'Few-Shot Examples', items:[
+        {text:'2\u20134 targeted examples for ambiguous scenarios', hl:true},
+        {text:'Show reasoning for why one action was chosen over alternatives', hl:false},
+        {text:'Enable generalization to novel patterns (not just matching)', hl:false},
+        {text:'Effective for: format consistency, false positive reduction, varied document handling', hl:false}
+      ]},
+      { title:'Structured Output via tool_use', items:[
+        {text:'tool_use + JSON schema = guaranteed schema compliance', hl:true},
+        {text:'Eliminates JSON syntax errors but NOT semantic errors (values don\'t sum, wrong field placement)', hl:true},
+        {text:'Nullable/optional fields \u2192 prevent model from fabricating values for absent data', hl:true},
+        {text:'Enum + "other" + detail string \u2192 extensible categories', hl:false}
+      ]},
+      { title:'Validation-Retry Loops', items:[
+        {text:'Append specific validation errors on retry \u2192 guides model correction', hl:true},
+        {text:'Retries are ineffective when info is absent from source document', hl:true},
+        {text:'Retries work for: format mismatches, structural errors', hl:false},
+        {text:'detected_pattern field \u2192 enables analysis of dismissal patterns', hl:false}
+      ]},
+      { title:'Batch Processing', items:[
+        {text:'50% cost savings, up to 24hr processing, no latency SLA', hl:true},
+        {text:'Good for: overnight reports, weekly audits, nightly test generation', hl:false},
+        {text:'Bad for: pre-merge checks, anything blocking', hl:true},
+        {text:'No multi-turn tool calling within a single batch request', hl:false},
+        {text:'custom_id for correlating request/response pairs', hl:false}
+      ]},
+      { title:'Multi-Pass Review', items:[
+        {text:'Self-review is unreliable: model retains reasoning context from generation', hl:true},
+        {text:'Independent review instance (without prior context) catches more issues', hl:false},
+        {text:'Per-file passes + cross-file integration pass > single large pass', hl:false}
+      ]}
+    ]
+  },
+  {
+    id:'D5', name:'Context Management & Reliability', weight:15,
+    sections:[
+      { title:'Context Window', items:[
+        {text:'Progressive summarization risk: loses numerical values, dates, percentages', hl:true},
+        {text:'"Lost in the middle": models attend to beginning and end, may miss middle', hl:true},
+        {text:'Fix: place key findings at beginning, detailed results with section headers after', hl:false},
+        {text:'Trim verbose tool outputs to relevant fields (e.g., 5 of 40 order fields)', hl:false},
+        {text:'"Case facts" block: extract transactional facts into persistent structured block', hl:false}
+      ]},
+      { title:'Escalation Triggers', items:[
+        {text:'Customer explicitly requests a human \u2192 honor immediately', hl:true},
+        {text:'Policy is ambiguous or silent on the request \u2192 escalate', hl:true},
+        {text:'Agent cannot make meaningful progress \u2192 escalate', hl:false},
+        {text:'Do NOT use sentiment-based escalation or self-reported confidence scores', hl:true}
+      ]},
+      { title:'Error Propagation', items:[
+        {text:'Return structured context: failure type + attempted query + partial results + alternatives', hl:true},
+        {text:'Subagents handle transient failures locally, propagate only unresolvable errors', hl:false},
+        {text:'NEVER silently suppress errors (returning empty as success)', hl:true},
+        {text:'NEVER terminate entire workflow on single failure', hl:true},
+        {text:'Distinguish access failures from valid empty results', hl:false}
+      ]},
+      { title:'Information Provenance', items:[
+        {text:'Claim-source mappings preserved through synthesis', hl:true},
+        {text:'Conflicting statistics: annotate with source attribution, don\'t arbitrarily pick one', hl:false},
+        {text:'Include publication/collection dates \u2192 prevents temporal misinterpretation', hl:false},
+        {text:'Coverage gap annotations: which findings are well-supported vs gaps', hl:false}
+      ]},
+      { title:'Human Review Workflows', items:[
+        {text:'Aggregate accuracy (97%) may mask poor performance on specific types/fields', hl:true},
+        {text:'Stratified random sampling for high-confidence extractions', hl:false},
+        {text:'Field-level confidence scores calibrated with labeled validation sets', hl:false},
+        {text:'Validate accuracy by document type AND field before automating', hl:false}
+      ]}
+    ]
+  }
+];
+
+// ===== STATE =====
+const STATE = {
+  completedDays: JSON.parse(localStorage.getItem('cca_completedDays') || '[]'),
+  attempts: JSON.parse(localStorage.getItem('cca_attempts') || '{}'),
+  quizScores: JSON.parse(localStorage.getItem('cca_quizScores') || '{}'),
+  learnedItems: JSON.parse(localStorage.getItem('cca_learnedItems') || '{}'),
+  linkStatus: JSON.parse(localStorage.getItem('cca_linkStatus') || '{}'),
+  filter: 'all',
+  quiz: null
+};
+function save() {
+  localStorage.setItem('cca_completedDays', JSON.stringify(STATE.completedDays));
+  localStorage.setItem('cca_attempts', JSON.stringify(STATE.attempts));
+  localStorage.setItem('cca_quizScores', JSON.stringify(STATE.quizScores));
+  localStorage.setItem('cca_learnedItems', JSON.stringify(STATE.learnedItems));
+  localStorage.setItem('cca_linkStatus', JSON.stringify(STATE.linkStatus));
+}
+
+// ===== HELPERS =====
+function domainClass(d) { return d.toLowerCase(); }
+function getUnlockedDomains() {
+  const domains = new Set();
+  STATE.completedDays.forEach(id => {
+    const day = STUDY_DAYS.find(d => d.id === id);
+    if (day) day.domains.forEach(d => domains.add(d));
+  });
+  return domains;
+}
+function getQuizQuestions() {
+  const unlocked = getUnlockedDomains();
+  return QUESTIONS.filter(q => unlocked.has(q.domain));
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ===== RENDER =====
+function renderDashboard() {
+  const pct = Math.round(STATE.completedDays.length / STUDY_DAYS.length * 100);
+  const circumference = 2 * Math.PI * 68;
+  const offset = circumference - (pct / 100) * circumference;
+  const remaining = STUDY_DAYS.filter(d => !STATE.completedDays.includes(d.id));
+  const daysLeft = remaining.reduce((sum, d) => sum + parseInt(d.timeEstimate.match(/\d+/)?.[0] || '1'), 0);
+  const timeLeft = remaining.length === 0 ? 'Done!' : `~${daysLeft} days`;
+  const quizCount = getQuizQuestions().length;
+
+  let quizScoreHtml = '';
+  ['D1','D2','D3','D4','D5'].forEach(d => {
+    const s = STATE.quizScores[d];
+    quizScoreHtml += `<div class="quiz-score-item">
+      <div class="quiz-score-domain" style="color:var(--${domainClass(d)})">${d}</div>
+      ${s ? `<div class="quiz-score-val">${s.correct}/${s.total}</div>` : '<div class="quiz-score-na">\u2014</div>'}
+    </div>`;
+  });
+
+  document.getElementById('dashboard').innerHTML = `
+    <div class="section-header fade-up"><h2>Claude Certified Architect \u2014 Foundations</h2></div>
+    <div class="card-flat fade-up" style="margin-bottom:20px">
+      <div class="dash-hero">
+        <div class="dash-hero-ring">
+          <div class="progress-ring-container" style="width:120px;height:120px">
+            <svg width="120" height="120"><circle class="progress-ring-bg" cx="60" cy="60" r="50" /><circle class="progress-ring-fill" cx="60" cy="60" r="50" stroke-dasharray="${2*Math.PI*50}" stroke-dashoffset="${2*Math.PI*50 - (pct/100)*2*Math.PI*50}"/></svg>
+            <div class="progress-ring-text"><span class="progress-pct" style="font-size:1.8rem">${pct}%</span><span class="progress-label">Complete</span></div>
+          </div>
+        </div>
+        <div class="dash-hero-stats-col">
+          <div class="dash-hero-stat"><span class="dash-hero-val">720</span><span class="dash-hero-label">Passing Score</span></div>
+          <div class="dash-hero-stat"><span class="dash-hero-val">4 / 6</span><span class="dash-hero-label">Scenarios per Exam</span></div>
+          <div class="dash-hero-stat"><span class="dash-hero-val">${timeLeft}</span><span class="dash-hero-label">Time Remaining</span></div>
+        </div>
+        <div class="dash-hero-right">
+          <div class="domain-bars">
+            ${['D1','D2','D3','D4','D5'].map(d => `
+              <div class="domain-bar-row">
+                <div class="domain-bar-label" style="color:var(--${domainClass(d)})">${d}: ${DOMAIN_NAMES[d].split(' ').slice(0,2).join(' ')}</div>
+                <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${DOMAIN_WEIGHTS[d]/27*100}%;background:var(--${domainClass(d)})"></div></div>
+                <div class="domain-bar-pct">${DOMAIN_WEIGHTS[d]}%</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-flat fade-up" style="margin-bottom:20px">
+      <div class="dash-hero">
+        <div class="dash-hero-ring">
+          <div style="text-align:center">
+            <h3 style="margin:0 0 12px">Quiz</h3>
+            <button class="start-quiz-btn" onclick="startQuiz()" ${quizCount === 0 ? 'disabled' : ''}>
+              ${quizCount > 0 ? `Start (${quizCount} Qs)` : 'Locked'}
+            </button>
+            ${quizCount === 0 ? '<div style="font-size:0.75rem;color:var(--ink-faded);margin-top:6px">Complete a study day to unlock</div>' : ''}
+          </div>
+        </div>
+        <div class="dash-hero-right" style="flex:0 0 75%">
+          <div class="quiz-score-grid" style="grid-template-columns:repeat(5,1fr);gap:12px">${quizScoreHtml}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  initFadeUp();
+}
+
+function renderStudyPlan() {
+  document.getElementById('study-plan').innerHTML = `
+    <div class="section-header fade-up"><h2>Study Plan</h2><p class="section-subtitle">7-day compressed curriculum \u2014 check off days as you complete them</p></div>
+    <div class="study-cards">
+      ${STUDY_DAYS.map(day => {
+        const done = STATE.completedDays.includes(day.id);
+        return `<div class="card study-card fade-up ${done ? 'completed' : ''}" data-day="${day.id}">
+          <div class="study-card-header">
+            <div class="study-card-left">
+              <input type="checkbox" class="study-checkbox" data-day="${day.id}" ${done ? 'checked' : ''}>
+              <div>
+                <h3 class="study-card-title">${day.dayLabel}: ${day.title}</h3>
+                <div style="font-size:0.82rem;color:var(--ink-faded);margin-top:2px">${day.platform}</div>
+              </div>
+            </div>
+            <span class="time-badge">${day.timeEstimate}</span>
+          </div>
+          <div class="study-tags">${day.domains.map(d => `<span class="domain-tag ${domainClass(d)}">${d}: ${DOMAIN_NAMES[d].split(' ').slice(0,2).join(' ')}</span>`).join('')}</div>
+          ${day.taskStatements.length ? `<div class="study-tasks">Task Statements: ${day.taskStatements.join(', ')}</div>` : ''}
+          <details class="study-details">
+            <summary>Focus Areas (${day.focusAreas.length} items)</summary>
+            <ul>${day.focusAreas.map((f, i) => {
+              const key = day.id + '-' + i;
+              const learned = STATE.learnedItems[key];
+              return `<li class="${learned ? 'learned' : ''}" data-learn="${key}">${escHtml(f)}</li>`;
+            }).join('')}</ul>
+          </details>
+          ${day.links.length ? `<div class="study-links">${day.links.map(l => {
+              const status = STATE.linkStatus[l.url] || '';
+              const dot = status === 'done' ? '\u25CF' : status === 'in-progress' ? '\u25D2' : '\u25CB';
+              const dotColor = status === 'done' ? 'var(--green)' : status === 'in-progress' ? 'var(--d4)' : 'var(--border)';
+              return `<span class="study-link-wrap"><span class="link-status-dot" data-cycle="${l.url}" style="color:${dotColor}" title="Click to cycle: not started \u2192 in progress \u2192 done">${dot}</span><a href="${l.url}" target="_blank" rel="noopener" class="study-link ${status}">${l.label}</a></span>`;
+            }).join('')}</div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  initFadeUp();
+}
+
+function renderPractice() {
+  const domains = ['all','D1','D2','D3','D4','D5'];
+  document.getElementById('practice').innerHTML = `
+    <div class="section-header fade-up" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div><h2>Practice Questions</h2><p class="section-subtitle">15 exam-style questions \u2014 filter by domain, click an option to check your answer</p></div>
+      ${Object.keys(STATE.attempts).length > 0 ? `<button class="reset-btn" onclick="resetAttempts()">Reset All Answers</button>` : ''}
+    </div>
+    <div class="filter-tabs fade-up">
+      ${domains.map(d => `<button class="filter-tab ${STATE.filter === d ? 'active' : ''}" data-filter="${d}">${d === 'all' ? 'All' : d + ': ' + DOMAIN_NAMES[d].split(' ').slice(0,2).join(' ')}</button>`).join('')}
+    </div>
+    <div class="questions-list">
+      ${QUESTIONS.map(q => {
+        const show = STATE.filter === 'all' || STATE.filter === q.domain;
+        const attempt = STATE.attempts[q.id];
+        return `<div class="card-flat question-card fade-up ${show ? '' : 'hidden'}" data-domain="${q.domain}" data-qid="${q.id}">
+          <div class="question-header">
+            <span class="domain-tag ${domainClass(q.domain)}">${q.domain}</span>
+            <span class="scenario-tag">${q.scenario}</span>
+            <span class="question-num">Q${q.id}</span>
+          </div>
+          <div class="question-text">${escHtml(q.text)}</div>
+          <div class="options-list">
+            ${q.options.map(o => {
+              let cls = 'option-btn';
+              if (attempt) {
+                cls += ' disabled';
+                if (o.letter === q.correct) cls += ' correct';
+                else if (o.letter === attempt.selected) cls += ' incorrect';
+              }
+              return `<button class="${cls}" data-qid="${q.id}" data-letter="${o.letter}">
+                <span class="option-letter">${o.letter}</span>
+                <span>${escHtml(o.text)}</span>
+              </button>`;
+            }).join('')}
+          </div>
+          <div class="explanation ${attempt ? 'visible' : ''}" id="exp-${q.id}">
+            <div class="explanation-label">${attempt ? (attempt.correct ? 'Correct! \u2713' : `Incorrect \u2014 Answer: ${q.correct}`) : ''}</div>
+            <div>${escHtml(q.explanation)}</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+  initFadeUp();
+}
+
+function renderCheatSheet() {
+  document.getElementById('cheat-sheet').innerHTML = `
+    <div class="section-header fade-up"><h2>Cheat Sheet</h2><p class="section-subtitle">Quick reference \u2014 highlighted items are most commonly tested</p></div>
+    <input type="text" class="cheat-search fade-up" placeholder="Search cheat sheet..." id="cheat-search">
+    <div class="cheat-domains">
+      ${CHEAT_SHEET.map(dom => `
+        <details class="cheat-domain fade-up" open>
+          <summary>
+            <span>${dom.id}: ${dom.name}</span>
+            <span style="display:flex;align-items:center;gap:8px">
+              <span class="weight-badge" style="background:var(--${domainClass(dom.id)}-bg);color:var(--${domainClass(dom.id)})">${dom.weight}%</span>
+              <span class="arrow">\u25B6</span>
+            </span>
+          </summary>
+          <div class="cheat-content">
+            ${dom.sections.map(sec => `
+              <div class="cheat-subsection">
+                <h4>${sec.title}</h4>
+                ${sec.table ? `
+                  <table class="cheat-table">
+                    <thead><tr>${sec.table.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                    <tbody>${sec.table.rows.map(r => `<tr>${r.map(c => `<td>${escHtml(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+                  </table>
+                ` : ''}
+                ${sec.items ? `<ul>${sec.items.map(it => `<li class="${it.hl ? 'highlight' : ''}">${escHtml(it.text)}</li>`).join('')}</ul>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </details>
+      `).join('')}
+    </div>
+  `;
+  initFadeUp();
+}
+
+function renderPatterns() {
+  document.getElementById('patterns').innerHTML = `
+    <div class="section-header fade-up"><h2>10 Key Exam Patterns</h2><p class="section-subtitle">The recurring decision rules the exam tests \u2014 know these cold</p></div>
+    <div class="patterns-grid">
+      ${EXAM_PATTERNS.map(p => `
+        <div class="card pattern-card fade-up">
+          <div class="pattern-num">${String(p.n).padStart(2,'0')}</div>
+          <h3>${p.title}</h3>
+          <div class="pattern-sub">${p.sub}</div>
+          <p>${escHtml(p.desc)}</p>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  initFadeUp();
+}
+
+function renderScenarios() {
+  document.getElementById('scenarios').innerHTML = `
+    <div class="section-header fade-up"><h2>Exam Scenarios</h2><p class="section-subtitle">You'll see 4 of these 6 on the exam</p></div>
+    <div class="scenario-note fade-up">Each scenario has a 67% chance of appearing on your exam sitting</div>
+    <div class="scenarios-grid">
+      ${SCENARIOS.map(s => `
+        <div class="card scenario-card fade-up">
+          <div class="scenario-num">Scenario ${s.id}</div>
+          <h3>${s.name}</h3>
+          <div class="scenario-tags">${s.domains.map(d => `<span class="domain-tag ${domainClass(d)}">${d}</span>`).join('')}</div>
+          <p class="scenario-concepts">${escHtml(s.concepts)}</p>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  initFadeUp();
+}
+
+// ===== QUIZ =====
+function resetAttempts() {
+  STATE.attempts = {};
+  save();
+  renderPractice();
+}
+
+function startQuiz() {
+  const qs = getQuizQuestions();
+  if (qs.length === 0) return;
+  STATE.quiz = { questions: shuffle(qs), index: 0, score: 0, answers: {} };
+  renderQuizQuestion();
+  document.getElementById('quiz-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuiz() {
+  document.getElementById('quiz-modal').classList.remove('active');
+  document.body.style.overflow = '';
+  STATE.quiz = null;
+  renderDashboard();
+}
+function renderQuizQuestion() {
+  const q = STATE.quiz;
+  if (q.index >= q.questions.length) { renderQuizResults(); return; }
+  const question = q.questions[q.index];
+  const answered = q.answers[question.id];
+  document.getElementById('quiz-modal').innerHTML = `
+    <div class="quiz-inner">
+      <div class="quiz-header">
+        <div>
+          <span class="quiz-progress-text">Question ${q.index + 1} of ${q.questions.length}</span>
+          <span class="quiz-score-text" style="margin-left:16px">Score: ${q.score}/${q.index}</span>
+        </div>
+        <button class="quiz-close" onclick="closeQuiz()">Exit Quiz</button>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${(q.index / q.questions.length) * 100}%"></div></div>
+      <div class="question-header" style="margin-bottom:14px">
+        <span class="domain-tag ${domainClass(question.domain)}">${question.domain}</span>
+        <span class="scenario-tag">${question.scenario}</span>
+      </div>
+      <div class="question-text" style="font-size:1rem;margin-bottom:20px">${escHtml(question.text)}</div>
+      <div class="options-list">
+        ${question.options.map(o => {
+          let cls = 'option-btn';
+          if (answered) {
+            cls += ' disabled';
+            if (o.letter === question.correct) cls += ' correct';
+            else if (o.letter === answered) cls += ' incorrect';
+          }
+          return `<button class="${cls}" onclick="quizAnswer(${question.id},'${o.letter}')" ${answered ? 'disabled' : ''}>
+            <span class="option-letter">${o.letter}</span>
+            <span>${escHtml(o.text)}</span>
+          </button>`;
+        }).join('')}
+      </div>
+      ${answered ? `
+        <div class="explanation visible" style="margin-top:16px">
+          <div class="explanation-label">${answered === question.correct ? 'Correct! \u2713' : `Incorrect \u2014 Answer: ${question.correct}`}</div>
+          <div>${escHtml(question.explanation)}</div>
+        </div>
+        <button class="quiz-next-btn visible" onclick="quizNext()" style="margin-top:16px">${q.index + 1 < q.questions.length ? 'Next Question \u2192' : 'See Results'}</button>
+      ` : ''}
+    </div>
+  `;
+}
+function quizAnswer(qid, letter) {
+  const q = STATE.quiz;
+  if (q.answers[qid]) return;
+  const question = q.questions[q.index];
+  q.answers[qid] = letter;
+  const correct = letter === question.correct;
+  if (correct) q.score++;
+  // Update quiz scores
+  if (!STATE.quizScores[question.domain]) STATE.quizScores[question.domain] = {correct:0,total:0};
+  STATE.quizScores[question.domain].total++;
+  if (correct) STATE.quizScores[question.domain].correct++;
+  save();
+  renderQuizQuestion();
+}
+function quizNext() { STATE.quiz.index++; renderQuizQuestion(); }
+function renderQuizResults() {
+  const q = STATE.quiz;
+  const byDomain = {};
+  q.questions.forEach(question => {
+    if (!byDomain[question.domain]) byDomain[question.domain] = {correct:0,total:0};
+    byDomain[question.domain].total++;
+    if (q.answers[question.id] === question.correct) byDomain[question.domain].correct++;
+  });
+  document.getElementById('quiz-modal').innerHTML = `
+    <div class="quiz-inner">
+      <div class="quiz-header">
+        <div></div>
+        <button class="quiz-close" onclick="closeQuiz()">Close</button>
+      </div>
+      <div class="quiz-results">
+        <h2>Quiz Complete</h2>
+        <div class="quiz-results-score">${q.score} / ${q.questions.length}</div>
+        <p style="margin:8px 0 24px;color:var(--ink-faded)">${Math.round(q.score/q.questions.length*100)}% correct</p>
+        <div class="quiz-results-breakdown">
+          ${Object.entries(byDomain).map(([d, s]) => `
+            <div class="quiz-results-item">
+              <div class="quiz-score-domain" style="color:var(--${domainClass(d)})">${d}</div>
+              <div class="quiz-score-val">${s.correct}/${s.total}</div>
+            </div>
+          `).join('')}
+        </div>
+        <button class="start-quiz-btn" onclick="closeQuiz()" style="margin-top:16px">Back to Dashboard</button>
+      </div>
+    </div>
+  `;
+}
+
+// ===== EVENTS =====
+document.addEventListener('click', e => {
+  // Focus area learned toggle
+  const learnItem = e.target.closest('li[data-learn]');
+  if (learnItem) {
+    const key = learnItem.dataset.learn;
+    if (STATE.learnedItems[key]) delete STATE.learnedItems[key];
+    else STATE.learnedItems[key] = true;
+    learnItem.classList.toggle('learned');
+    save();
+    return;
+  }
+  // Resource link status cycle
+  const dot = e.target.closest('.link-status-dot');
+  if (dot) {
+    e.preventDefault();
+    const url = dot.dataset.cycle;
+    const current = STATE.linkStatus[url] || '';
+    const next = current === '' ? 'in-progress' : current === 'in-progress' ? 'done' : '';
+    if (next) STATE.linkStatus[url] = next;
+    else delete STATE.linkStatus[url];
+    save();
+    renderStudyPlan();
+    return;
+  }
+  // Study day checkbox
+  const cb = e.target.closest('.study-checkbox');
+  if (cb) {
+    const id = parseInt(cb.dataset.day);
+    if (cb.checked) { if (!STATE.completedDays.includes(id)) STATE.completedDays.push(id); }
+    else { STATE.completedDays = STATE.completedDays.filter(d => d !== id); }
+    save();
+    renderDashboard();
+    renderStudyPlan();
+    renderPractice();
+    return;
+  }
+  // Practice question answer
+  const opt = e.target.closest('.option-btn:not(.disabled)');
+  if (opt && !opt.closest('.quiz-modal')) {
+    const qid = parseInt(opt.dataset.qid);
+    const letter = opt.dataset.letter;
+    const q = QUESTIONS.find(x => x.id === qid);
+    if (!q || STATE.attempts[qid]) return;
+    STATE.attempts[qid] = { selected: letter, correct: letter === q.correct };
+    save();
+    renderPractice();
+    return;
+  }
+  // Filter tabs
+  const tab = e.target.closest('.filter-tab');
+  if (tab) {
+    STATE.filter = tab.dataset.filter;
+    renderPractice();
+    return;
+  }
+});
+
+// Cheat sheet search
+document.addEventListener('input', e => {
+  if (e.target.id === 'cheat-search') {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll('.cheat-domain').forEach(dom => {
+      let anyMatch = false;
+      dom.querySelectorAll('.cheat-subsection').forEach(sub => {
+        let subMatch = false;
+        sub.querySelectorAll('li, td').forEach(item => {
+          const match = !query || item.textContent.toLowerCase().includes(query);
+          item.style.display = match ? '' : 'none';
+          if (match) subMatch = true;
+        });
+        const title = sub.querySelector('h4');
+        if (title) {
+          const titleMatch = title.textContent.toLowerCase().includes(query);
+          if (titleMatch) subMatch = true;
+        }
+        sub.style.display = subMatch ? '' : 'none';
+        if (subMatch) anyMatch = true;
+      });
+      dom.style.display = anyMatch ? '' : 'none';
+      if (anyMatch && query) dom.open = true;
+    });
+  }
+});
+
+// Nav active state
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-link');
+const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
+sections.forEach(s => navObserver.observe(s));
+
+// Nav scroll shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// Smooth scroll
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// FadeUp
+function initFadeUp() {
+  document.querySelectorAll('.fade-up:not(.observed)').forEach(el => {
+    el.classList.add('observed');
+    fadeObserver.observe(el);
+  });
+}
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+// ===== INIT =====
+function init() {
+  renderDashboard();
+  renderStudyPlan();
+  renderPractice();
+  renderCheatSheet();
+  renderPatterns();
+  renderScenarios();
+}
+init();
+</script>
+</body>
+</html>
